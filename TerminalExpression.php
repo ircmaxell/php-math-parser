@@ -8,7 +8,9 @@ abstract class TerminalExpression {
     }
 
     public static function factory($value) {
-        if (is_numeric($value)) {
+        if (is_object($value) && $value instanceof TerminalExpression) {
+            return $value;
+        } elseif (is_numeric($value)) {
             return new Number($value);
         } elseif ($value == '+') {
             return new Addition($value);
