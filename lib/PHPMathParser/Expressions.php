@@ -1,4 +1,7 @@
 <?php
+
+namespace PHPMathParser;
+
 class Parenthesis extends TerminalExpression {
 
     protected $precidence = 6;

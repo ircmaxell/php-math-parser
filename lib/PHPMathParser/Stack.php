@@ -1,4 +1,7 @@
 <?php
+
+namespace PHPMathParser;
+
 class Stack {
 
     protected $data = array();

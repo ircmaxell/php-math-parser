@@ -1,4 +1,7 @@
 <?php
+
+namespace PHPMathParser;
+
 abstract class TerminalExpression {
 
     protected $value = '';
@@ -23,7 +26,7 @@ abstract class TerminalExpression {
         } elseif (in_array($value, array('(', ')'))) {
             return new Parenthesis($value);
         }
-        throw new Exception('Undefined Value ' . $value);
+        throw new \Exception('Undefined Value ' . $value);
     }
 
     abstract public function operate(Stack $stack);

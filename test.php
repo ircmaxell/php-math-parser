@@ -1,6 +1,8 @@
 <?php
 
-require_once 'Math.php';
+use PHPMathParser\Math;
+
+require_once 'lib/PHPMathParser/Math.php';
 
 $math = new Math();
 
