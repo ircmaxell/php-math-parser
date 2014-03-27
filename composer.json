@@ -1,0 +1,20 @@
+{
+	"name": "ircmaxell/php-math-parser",
+	"description": "A simple shunting-yard based math parser and executor for PHP",
+	"version": "0.0.1",
+	"keywords": ["math", "eval"],
+	"homepage": "https://github.com/ircmaxell/php-math-parser",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Anthony Ferrara",
+			"email": "ircmaxell@php.net",
+			"homepage": "http://blog.ircmaxell.com"
+		}
+	],
+	"autoload": {
+		"files": [
+			"lib/PHPMathParser/Math.php"
+		]
+	}
+}
