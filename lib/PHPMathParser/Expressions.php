@@ -32,21 +32,6 @@ class Parenthesis extends TerminalExpression {
 class Number extends TerminalExpression {
 
     public function operate(Stack $stack) {
-		//check for unary on the left
-		//echo "key: ";
-		//var_dump(key(end($stack)));echo "<br />";
-		//echo "end of stack: ";
-		//var_dump(end($stack));echo "<br />";
-		//echo "this value: ";
-		//var_dump($this->value);echo "<br />";
-		//if(end($stack)->isUnary()){
-		//	echo "<br />unary on left<br />";
-			//return -1 * $this->value;
-		//}
-		//else{
-        	//return $this->value;
-		//}
-
 		echo "<br />number now:<pre>";
 		var_dump($this->value);echo "</pre><br />";
 
@@ -83,11 +68,26 @@ class Unary extends Operator {
 	}
 
 	public function operate(Stack $stack) {
+		/*
 		$next = $stack->pop();
 		$next->value = -$next->value;
 		echo "<br />unary now:<pre>";
 		var_dump($next->value);echo "</pre><br />";
-		return $next;
+
+		//create new number
+		$unaryNumber = new Number($next);
+
+		return $unaryNumber->operate($stack);
+		*/
+
+		//the operate here should always be returning a value alone
+		$next = $stack->pop()->operate($stack);
+		//create new number that's negative
+		$unaryNumber = new Number(-$next);
+
+		echo "<br />unary now:<pre>";
+		var_dump($unaryNumber->operate($stack));echo "</pre><br />";
+		return $unaryNumber->operate($stack);
 	}
 }
 
@@ -100,15 +100,19 @@ class Addition extends Operator {
 		$right = $stack->pop()->operate($stack);
 
 		echo "add left:<pre> ";
-		var_dump($left->value);
+		var_dump($left);
 		echo "</pre><br />";
 
 		echo "add right:<pre> ";
-		var_dump($right->value);
+		var_dump($right);
 		echo "</pre><br />";
 
-		return $left->value + $right->value;
+		echo "add operate:<pre> ";
+		echo $left;
+		echo $left + $right;
+		echo "</pre><br />";
 
+		return $left + $right;
 
 		//return $stack->pop()->operate($stack) + $stack->pop()->operate($stack);
     }
@@ -122,7 +126,7 @@ class Subtraction extends Operator {
     public function operate(Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
-        return $right - $left;
+        return $right->value - $left->value;
     }
 
 }
@@ -146,7 +150,7 @@ class Multiplication extends Operator {
 		var_dump($right);
 		echo "</pre><br />";
 
-		return $left->operate($stack) * $right->operate($stack);
+		return $left->operate($stack)->value * $right->operate($stack)->value;
 
         //return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
     }
@@ -158,10 +162,17 @@ class Division extends Operator {
     protected $precidence = 5;
 
     public function operate(Stack $stack) {
-        $left = $stack->pop()->operate($stack);
-        $right = $stack->pop()->operate($stack);
-		//echo "<br />Left: ". $left . "<br />";
-		//echo "<br />Right: ". $right . "<br />";
+
+		$left = $stack->pop()->operate($stack);
+		$right = $stack->pop()->operate($stack);
+
+		echo "div left:<pre> ";
+		var_dump($left);
+		echo "</pre><br />";
+
+		echo "div right:<pre> ";
+		var_dump($right);
+		echo "</pre><br />";
 
         return $right / $left;
     }

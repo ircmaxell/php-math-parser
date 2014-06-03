@@ -7,6 +7,10 @@ require_once 'lib/PHPMathParser/Math.php';
 $math = new Math();
 
 //Positive Integer Tests
+	$answer = $math->evaluate('10 / 5');
+	var_dump($answer);echo "<br /><br />";
+	// int(2)
+
 /*
 	$answer = $math->evaluate('(2 + 3) * 4');
 	var_dump($answer);echo "<br /><br />";
@@ -70,11 +74,11 @@ $math = new Math();
 //Neg Unary Operator Tests
 	$answer = $math->evaluate('-2 + -3');
 	var_dump($answer);echo " <br /><br />";
-	//FAIL got int(3), should be int(-5)
-/*
-	$answer = $math->evaluate('-2.5 / .5');
+	//int(-5)
+
+	$answer = $math->evaluate('-2.5 / 0.5');
 	var_dump($answer);echo "<br /><br />";
-	//FAIL  got float(5), should be float(-5)
+	//float(-5)
 
 	$answer = $math->evaluate('-9 * (-3+8) - 6 - -45');
 	var_dump($answer);echo "<br /><br />";
@@ -88,4 +92,3 @@ $math = new Math();
 	$answer = $math->evaluate('($a + $a) * 4');
 	var_dump($answer);echo "<br /><br />";
 	// float(-44)
-*/
