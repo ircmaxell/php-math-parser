@@ -49,16 +49,15 @@ class Math {
     }
 
     public function run(Stack $stack) {
-		echo "<br />peek:<pre> ";
-		var_dump($stack->peek());
-		echo "</pre><br />";
+		//echo "<br />peek:<pre> ";
+		//var_dump($stack->peek());
+		//echo "</pre><br />";
 
         while (($operator = $stack->pop()) && $operator->isOperator()) {
+			echo "<br />first:<pre>";
+			var_dump($operator);echo "</pre><br />";
             $value = $operator->operate($stack);
             if (!is_null($value)) {
-
-				echo "<br />value: $value<br />";
-
 
 				$stack->push(TerminalExpression::factory($value));
             }

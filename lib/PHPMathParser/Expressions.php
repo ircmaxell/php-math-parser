@@ -7,6 +7,8 @@ class Parenthesis extends TerminalExpression {
     protected $precidence = 6;
 
     public function operate(Stack $stack) {
+		echo "<br />paren now:<pre>";
+		var_dump($this->value);echo "</pre><br />";
     }
 
     public function getPrecidence() {
@@ -45,49 +47,12 @@ class Number extends TerminalExpression {
         	//return $this->value;
 		//}
 
+		echo "<br />number now:<pre>";
+		var_dump($this->value);echo "</pre><br />";
+
 		return $this->value;
     }
 
-}
-
-class Unary extends TerminalExpression {
-
-	//protected $precidence = 7;
-
-	//public function getPrecidence() {
-	//	return $this->precidence;
-	//}
-
-	public function isUnary() {
-		return true;
-	}
-
-	public function operate(Stack $stack) {
-		//echo "<br />stack:<br />";
-		//var_dump($stack);echo "<br />";
-
-		$end = end($stack);
-
-		echo "end: ";
-		var_dump($end);echo "<br />";
-		echo "unary key: ";
-		var_dump(key($end));echo "<br />";
-		echo "key: ";
-		var_dump(key($end));echo "<br />";
-		echo "end of stack: ";
-		var_dump($end);echo "<br />";
-		echo "end of stack value: ";
-		var_dump(end($end)->value);echo "<br />";
-		echo "this value: ";
-		var_dump($this->value);echo "<br />";
-
-		end($end)->value = -end($end)->value;
-
-		//echo "new end of stack value: ";
-		var_dump(end($end)->value);echo "<br />";
-
-		return $this->value;
-	}
 }
 
 abstract class Operator extends TerminalExpression {
@@ -109,24 +74,41 @@ abstract class Operator extends TerminalExpression {
 
 }
 
+class Unary extends Operator {
+
+	protected $precidence = 5;
+
+	public function isUnary() {
+		return true;
+	}
+
+	public function operate(Stack $stack) {
+		$next = $stack->pop();
+		$next->value = -$next->value;
+		echo "<br />unary now:<pre>";
+		var_dump($next->value);echo "</pre><br />";
+		return $next;
+	}
+}
+
 class Addition extends Operator {
 
     protected $precidence = 4;
 
     public function operate(Stack $stack) {
+		$left = $stack->pop()->operate($stack);
+		$right = $stack->pop()->operate($stack);
 
-		$left = $stack->pop();
-		$right = $stack->pop();
-
-		echo "<br />left:<pre> ";
-		var_dump($left);
+		echo "add left:<pre> ";
+		var_dump($left->value);
 		echo "</pre><br />";
 
-		echo "<br />right:<pre> ";
-		var_dump($right);
+		echo "add right:<pre> ";
+		var_dump($right->value);
 		echo "</pre><br />";
 
-		return $left->operate($stack) + $right->operate($stack);
+		return $left->value + $right->value;
+
 
 		//return $stack->pop()->operate($stack) + $stack->pop()->operate($stack);
     }
@@ -150,7 +132,23 @@ class Multiplication extends Operator {
     protected $precidence = 5;
 
     public function operate(Stack $stack) {
-        return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
+		$left = $stack->pop();
+		$right = $stack->pop();
+
+		echo "<br />multi now:<pre>";
+		var_dump($this->value);echo "</pre><br />";
+
+		echo "multi left:<pre> ";
+		var_dump($left);
+		echo "</pre><br />";
+
+		echo "multi right:<pre> ";
+		var_dump($right);
+		echo "</pre><br />";
+
+		return $left->operate($stack) * $right->operate($stack);
+
+        //return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
     }
 
 }
