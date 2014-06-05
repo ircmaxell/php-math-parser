@@ -11,7 +11,6 @@ $math = new Math();
 	var_dump($answer);echo "<br /><br />";
 	// int(2)
 
-/*
 	$answer = $math->evaluate('(2 + 3) * 4');
 	var_dump($answer);echo "<br /><br />";
 	// int(20)
@@ -60,7 +59,7 @@ $math = new Math();
 
 	$answer = $math->evaluate('10.6 / 1.2');
 	var_dump($answer);echo "<br /><br />";
-	// float(8.83333333333) (but 8.83333333333333 in Apple Calculator)
+	// float(8.83333333333)
 
 	$answer = $math->evaluate('(1.65 + 2) * (3.1415 + 4) * (5 + 6.8989)');
 	var_dump($answer);echo "<br /><br />";
@@ -69,9 +68,13 @@ $math = new Math();
 	$math->registerVariable('a', 5.36464);
 	$answer = $math->evaluate('($a + $a) * 4');
 	var_dump($answer);echo "<br /><br />";
-	// float 42.91712
-*/
+	// float(42.91712)
+
 //Neg Unary Operator Tests
+	$answer = $math->evaluate('3 - -3');
+	var_dump($answer);echo " <br /><br />";
+	//int(6)
+
 	$answer = $math->evaluate('-2 + -3');
 	var_dump($answer);echo " <br /><br />";
 	//int(-5)
@@ -82,11 +85,11 @@ $math = new Math();
 
 	$answer = $math->evaluate('-9 * (-3+8) - 6 - -45');
 	var_dump($answer);echo "<br /><br />";
-	//FAIL  int(-45)		//Order of operations isn't working here! should be 6.  math:  -9 * 5 - 6 - -45		-45 - 6 - - 45	-51 - - 45		-6
+	//int(-6)
 
 	$answer = $math->evaluate('-7.3 * (-3.2+8) - 6 - -45.5');
 	var_dump($answer);echo "<br /><br />";
-	// float(-45.5)
+	// float(4.46)
 
 	$math->registerVariable('a', -5.5);
 	$answer = $math->evaluate('($a + $a) * 4');

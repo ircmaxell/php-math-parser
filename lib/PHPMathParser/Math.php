@@ -12,11 +12,6 @@ class Math {
 
     public function evaluate($string) {
         $stack = $this->parse($string);
-
-		echo "<br /> stack: <br /><pre>";
-		var_dump($stack);
-		echo "</pre><br /><br /><br />";
-
 		return $this->run($stack);
     }
 
@@ -49,16 +44,9 @@ class Math {
     }
 
     public function run(Stack $stack) {
-		//echo "<br />peek:<pre> ";
-		//var_dump($stack->peek());
-		//echo "</pre><br />";
-
         while (($operator = $stack->pop()) && $operator->isOperator()) {
-			echo "<br />first:<pre>";
-			var_dump($operator);echo "</pre><br />";
             $value = $operator->operate($stack);
             if (!is_null($value)) {
-
 				$stack->push(TerminalExpression::factory($value));
             }
         }
@@ -79,7 +67,6 @@ class Math {
             $output .= $el->render();
         }
         if ($output) {
-			echo "output: $output<br />";
 			return $output;
         }
         throw new \RuntimeException('Could not render output');
@@ -136,7 +123,6 @@ class Math {
 				}
 			}
 		}
-		var_dump($parts);echo "<br />";
         return $parts;
     }
 
