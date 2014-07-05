@@ -97,3 +97,14 @@ class Division extends Operator {
     }
 
 }
+
+class Power extends Operator {
+
+    protected $precidence = 5;
+
+    public function operate(Stack $stack) {
+        $left = $stack->pop()->operate($stack);
+        $right = $stack->pop()->operate($stack);
+        return pow($left,$right);
+    }
+}
