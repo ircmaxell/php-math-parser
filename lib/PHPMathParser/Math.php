@@ -97,9 +97,9 @@ class Math {
             $operators->push($expression);
         } elseif ($end->isOperator()) {
             do {
-                if ($expression->isLeftAssoc() && $expression->getPrecidence() <= $end->getPrecidence()) {
+                if ($expression->isLeftAssoc() && $expression->getPrecedence() <= $end->getPrecedence()) {
                     $output->push($operators->pop());
-                } elseif (!$expression->isLeftAssoc() && $expression->getPrecidence() < $end->getPrecidence()) {
+                } elseif (!$expression->isLeftAssoc() && $expression->getPrecedence() < $end->getPrecedence()) {
                     $output->push($operators->pop());
                 } else {
                     break;
