@@ -87,6 +87,10 @@ $math = new Math();
 	var_dump($answer);echo "<br /><br />";
 	//int(-6)
 
+	$answer = $math->evaluate('(10 / 5 * -(1 + 2))');
+	var_dump($answer);echo "<br /><br />";
+	//int(-6)
+
 	$answer = $math->evaluate('-7.3 * (-3.2+8) - 6 - -45.5');
 	var_dump($answer);echo "<br /><br />";
 	// float(4.46)

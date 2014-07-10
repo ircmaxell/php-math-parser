@@ -56,7 +56,7 @@ abstract class Operator extends TerminalExpression {
 
 class Unary extends Operator {
 
-	protected $precidence = 5;
+	protected $precidence = 7;
 
 	public function isUnary() {
 		return true;
