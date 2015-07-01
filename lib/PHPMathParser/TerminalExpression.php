@@ -11,6 +11,8 @@ abstract class TerminalExpression {
     }
 
     public static function factory($value) {
+
+        var_dump($value);
         if (is_object($value) && $value instanceof TerminalExpression) {
             return $value;
         } elseif (is_numeric($value)) {
@@ -25,6 +27,8 @@ abstract class TerminalExpression {
             return new Division($value);
         } elseif (in_array($value, array('(', ')'))) {
             return new Parenthesis($value);
+        } elseif ($value == '^') {
+            return new Power($value);
         }
         throw new \Exception('Undefined Value ' . $value);
     }

@@ -97,9 +97,9 @@ class Math {
             $operators->push($expression);
         } elseif ($end->isOperator()) {
             do {
-                if ($expression->isLeftAssoc() && $expression->getPrecidence() <= $end->getPrecidence()) {
+                if ($expression->isLeftAssoc() && $expression->getPrecedence() <= $end->getPrecedence()) {
                     $output->push($operators->pop());
-                } elseif (!$expression->isLeftAssoc() && $expression->getPrecidence() < $end->getPrecidence()) {
+                } elseif (!$expression->isLeftAssoc() && $expression->getPrecedence() < $end->getPrecedence()) {
                     $output->push($operators->pop());
                 } else {
                     break;
@@ -112,7 +112,7 @@ class Math {
     }
 
     protected function tokenize($string) {
-        $parts = preg_split('((\d+|\+|-|\(|\)|\*|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('((\f+|\+|-|\(|\)|\*|\^|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         $parts = array_map('trim', $parts);
         return $parts;
     }
