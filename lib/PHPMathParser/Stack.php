@@ -18,4 +18,9 @@ class Stack {
         return array_pop($this->data);
     }
 
+	//check out the end of the array without changing the pointer via http://stackoverflow.com/a/7490837/706578
+	public function peek(){
+		return current(array_slice($this->data, -1));
+	}
+
 }

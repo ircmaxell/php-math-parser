@@ -15,7 +15,9 @@ abstract class TerminalExpression {
             return $value;
         } elseif (is_numeric($value)) {
             return new Number($value);
-        } elseif ($value == '+') {
+        } elseif ($value == 'u') {
+			return new Unary($value);
+		} elseif ($value == '+') {
             return new Addition($value);
         } elseif ($value == '-') {
             return new Subtraction($value);
@@ -36,6 +38,10 @@ abstract class TerminalExpression {
     public function isOperator() {
         return false;
     }
+
+	public function isUnary() {
+		return false;
+	}
 
     public function isParenthesis() {
         return false;

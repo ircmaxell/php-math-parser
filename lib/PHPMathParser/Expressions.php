@@ -30,7 +30,7 @@ class Parenthesis extends TerminalExpression {
 class Number extends TerminalExpression {
 
     public function operate(Stack $stack) {
-        return $this->value;
+		return $this->value;
     }
 
 }
@@ -54,12 +54,30 @@ abstract class Operator extends TerminalExpression {
 
 }
 
+class Unary extends Operator {
+
+	protected $precidence = 7;
+
+	public function isUnary() {
+		return true;
+	}
+
+	public function operate(Stack $stack) {
+		//the operate here should always be returning a value alone
+		$next = $stack->pop()->operate($stack);
+		//create new number that's negative
+		$unaryNumber = new Number(-$next);
+
+		return $unaryNumber->operate($stack);
+	}
+}
+
 class Addition extends Operator {
 
     protected $precedence = 4;
 
     public function operate(Stack $stack) {
-        return $stack->pop()->operate($stack) + $stack->pop()->operate($stack);
+		return $stack->pop()->operate($stack) + $stack->pop()->operate($stack);
     }
 
 }
@@ -81,7 +99,7 @@ class Multiplication extends Operator {
     protected $precedence = 5;
 
     public function operate(Stack $stack) {
-        return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
+		return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
     }
 
 }
@@ -91,8 +109,9 @@ class Division extends Operator {
     protected $precedence = 5;
 
     public function operate(Stack $stack) {
-        $left = $stack->pop()->operate($stack);
-        $right = $stack->pop()->operate($stack);
+		$left = $stack->pop()->operate($stack);
+		$right = $stack->pop()->operate($stack);
+
         return $right / $left;
     }
 
