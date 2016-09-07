@@ -119,7 +119,7 @@ class Division extends Operator {
 
 class Power extends Operator {
 
-    protected $precedence = 5;
+    protected $precedence = 6;
 
     public function operate(Stack $stack) {
         $left = $stack->pop()->operate($stack);
