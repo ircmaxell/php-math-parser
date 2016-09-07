@@ -2,7 +2,7 @@
 
 use PHPMathParser\Math;
 
-require_once 'lib/PHPMathParser/Math.php';
+require_once 'vendor/autoload.php';
 
 $math = new Math();
 

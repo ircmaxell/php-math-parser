@@ -1,21 +1,28 @@
 <?php
 
+/*
+ * The PHP Math Parser library
+ *
+ * @author     Anthony Ferrara <ircmaxell@ircmaxell.com>
+ * @copyright  2011 The Authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    Build @@version@@
+ */
 namespace PHPMathParser;
 
-require_once 'Stack.php';
-require_once 'TerminalExpression.php';
-require_once 'Expressions.php';
-
-class Math {
-
+class Math
+{
     protected $variables = array();
 
-    public function evaluate($string) {
+    public function evaluate($string)
+    {
         $stack = $this->parse($string);
-		return $this->run($stack);
+
+        return $this->run($stack);
     }
 
-    public function parse($string) {
+    public function parse($string)
+    {
         $tokens = $this->tokenize($string);
         $output = new Stack();
         $operators = new Stack();
@@ -36,43 +43,52 @@ class Math {
             }
             $output->push($op);
         }
+
         return $output;
     }
 
-    public function registerVariable($name, $value) {
+    public function registerVariable($name, $value)
+    {
         $this->variables[$name] = $value;
     }
 
-    public function run(Stack $stack) {
+    public function run(Stack $stack)
+    {
         while (($operator = $stack->pop()) && $operator->isOperator()) {
             $value = $operator->operate($stack);
             if (!is_null($value)) {
-				$stack->push(TerminalExpression::factory($value));
+                $stack->push(TerminalExpression::factory($value));
             }
         }
+
         return $operator ? $operator->render() : $this->render($stack);
     }
 
-    protected function extractVariables($token) {
+    protected function extractVariables($token)
+    {
         if ($token[0] == '$') {
             $key = substr($token, 1);
+
             return isset($this->variables[$key]) ? $this->variables[$key] : 0;
         }
+
         return $token;
     }
 
-    protected function render(Stack $stack) {
+    protected function render(Stack $stack)
+    {
         $output = '';
         while (($el = $stack->pop())) {
             $output .= $el->render();
         }
         if ($output) {
-			return $output;
+            return $output;
         }
         throw new \RuntimeException('Could not render output');
     }
 
-    protected function parseParenthesis(TerminalExpression $expression, Stack $output, Stack $operators) {
+    protected function parseParenthesis(TerminalExpression $expression, Stack $output, Stack $operators)
+    {
         if ($expression->isOpen()) {
             $operators->push($expression);
         } else {
@@ -91,7 +107,8 @@ class Math {
         }
     }
 
-    protected function parseOperator(TerminalExpression $expression, Stack $output, Stack $operators) {
+    protected function parseOperator(TerminalExpression $expression, Stack $output, Stack $operators)
+    {
         $end = $operators->poke();
         if (!$end) {
             $operators->push($expression);
@@ -111,18 +128,19 @@ class Math {
         }
     }
 
-    protected function tokenize($string) {
-		$parts = preg_split('((\d+\.?\d+|\+|-|\(|\)|\*|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-		$parts = array_map('trim', $parts);
-		foreach($parts as $key => &$value){
-			//if this is the first token or we've already had an operator or open paren, this is unary
-			if($value == '-'){
-				if($key - 1 < 0 || in_array($parts[$key - 1], array('+', '-', '*', '/', '('))){
-					$value = 'u';
-				}
-			}
-		}
+    protected function tokenize($string)
+    {
+        $parts = preg_split('((\d+\.?\d+|\+|-|\(|\)|\*|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $parts = array_map('trim', $parts);
+        foreach ($parts as $key => &$value) {
+            //if this is the first token or we've already had an operator or open paren, this is unary
+            if ($value == '-') {
+                if ($key - 1 < 0 || in_array($parts[$key - 1], array('+', '-', '*', '/', '('))) {
+                    $value = 'u';
+                }
+            }
+        }
+
         return $parts;
     }
-
 }

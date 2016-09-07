@@ -12,9 +12,12 @@
 			"homepage": "http://blog.ircmaxell.com"
 		}
 	],
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "^1.11"
+	},
 	"autoload": {
-		"files": [
-			"lib/PHPMathParser/Math.php"
-		]
+		"psr-4": {
+			"PHPMathParser\\": "lib/PHPMathParser/"
+		}
 	}
 }
