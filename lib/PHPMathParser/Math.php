@@ -12,7 +12,7 @@ class Math {
 
     public function evaluate($string) {
         $stack = $this->parse($string);
-        return $this->run($stack);
+		return $this->run($stack);
     }
 
     public function parse($string) {
@@ -47,7 +47,7 @@ class Math {
         while (($operator = $stack->pop()) && $operator->isOperator()) {
             $value = $operator->operate($stack);
             if (!is_null($value)) {
-                $stack->push(TerminalExpression::factory($value));
+				$stack->push(TerminalExpression::factory($value));
             }
         }
         return $operator ? $operator->render() : $this->render($stack);
@@ -67,7 +67,7 @@ class Math {
             $output .= $el->render();
         }
         if ($output) {
-            return $output;
+			return $output;
         }
         throw new \RuntimeException('Could not render output');
     }
@@ -112,8 +112,16 @@ class Math {
     }
 
     protected function tokenize($string) {
-        $parts = preg_split('((\f+|\+|-|\(|\)|\*|\^|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-        $parts = array_map('trim', $parts);
+		$parts = preg_split('((\d+\.?\d+|\+|-|\(|\)|\*|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+		$parts = array_map('trim', $parts);
+		foreach($parts as $key => &$value){
+			//if this is the first token or we've already had an operator or open paren, this is unary
+			if($value == '-'){
+				if($key - 1 < 0 || in_array($parts[$key - 1], array('+', '-', '*', '/', '('))){
+					$value = 'u';
+				}
+			}
+		}
         return $parts;
     }
 
