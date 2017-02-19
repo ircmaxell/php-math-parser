@@ -18,6 +18,7 @@ use PHPMathParser\Expressions\Parenthesis;
 use PHPMathParser\Expressions\Power;
 use PHPMathParser\Expressions\Subtraction;
 use PHPMathParser\Expressions\Unary;
+use PHPMathParser\Expressions\MathFunction;
 
 abstract class TerminalExpression
 {
@@ -48,6 +49,8 @@ abstract class TerminalExpression
             return new Parenthesis($value);
         } elseif ($value == '^') {
             return new Power($value);
+        } elseif (MathFunction::isFunction($value)) {
+            return new MathFunction($value);
         }
         throw new \Exception('Undefined Value ' . $value);
     }

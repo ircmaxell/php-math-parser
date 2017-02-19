@@ -99,3 +99,24 @@ $math = new Math();
 	$answer = $math->evaluate('($a + $a) * 4');
 	var_dump($answer);echo "<br /><br />";
 	// float(-44)
+    
+    // TEST added by motionSeed 
+    $math->registerVariable('a', 5);
+	$answer = $math->evaluate('10 + CEIL($a / 4)');
+	var_dump($answer);echo "<br /><br />";
+	// int(12)
+    
+    $math->registerVariable('a', 5);
+	$answer = $math->evaluate('10 + FLOOR($a / 4)');
+	var_dump($answer);echo "<br /><br />";
+	// int(11)
+    
+    $math->registerVariable('a', 9);
+	$answer = $math->evaluate('10 + SQRT($a)');
+	var_dump($answer);echo "<br /><br />";
+	// int(13)
+    
+    $math->registerVariable('a', 10);
+	$answer = $math->evaluate('10 + CEIL(SQRT($a))');
+	var_dump($answer);echo "<br /><br />";
+	// int(14)
