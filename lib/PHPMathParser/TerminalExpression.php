@@ -48,6 +48,8 @@ abstract class TerminalExpression
             return new Parenthesis($value);
         } elseif ($value == '^') {
             return new Power($value);
+        } elseif (MathFunction::isFunction($value)) {
+            return new MathFunction($value);
         }
         throw new \Exception('Undefined Value ' . $value);
     }

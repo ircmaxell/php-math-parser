@@ -1,1 +1,7 @@
 vendor
+
+# Netbeans
+/nbproject/private/
+project.properties
+project.xml
+/.gitignore
