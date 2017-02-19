@@ -18,6 +18,7 @@ use PHPMathParser\Expressions\Parenthesis;
 use PHPMathParser\Expressions\Power;
 use PHPMathParser\Expressions\Subtraction;
 use PHPMathParser\Expressions\Unary;
+use PHPMathParser\Expressions\MathFunction;
 
 abstract class TerminalExpression
 {
